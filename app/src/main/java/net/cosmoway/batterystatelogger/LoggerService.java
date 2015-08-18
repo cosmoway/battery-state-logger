@@ -9,6 +9,11 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import net.cosmoway.batterystatelogger.managers.LogFileManager;
+
+import java.util.Date;
+import java.util.Locale;
+
 public class LoggerService extends Service {
 
     private BatteryStateReceiver mReceiver;
@@ -56,6 +61,11 @@ public class LoggerService extends Service {
                 // バッテリーが変化した
                 Bundle bundle = intent.getExtras();
                 int temp = bundle.getInt(BatteryManager.EXTRA_TEMPERATURE);
+                String text = String.format("Temp:%d\n", temp);
+                String fileName = String.format(Locale.ENGLISH, "%tF.log", new Date());
+                String dirName = "BatteryState";
+
+                LogFileManager.write(text, fileName, dirName, true);
             }
         }
     }
