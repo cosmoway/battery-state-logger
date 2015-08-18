@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import net.cosmoway.batterystatelogger.models.BatteryState;
+
 import java.util.Date;
 
 public class LoggerService extends Service {
@@ -60,12 +62,31 @@ public class LoggerService extends Service {
             if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
                 // バッテリーが変化した
                 Bundle bundle = intent.getExtras();
-                int temp = bundle.getInt(BatteryManager.EXTRA_TEMPERATURE);
+                int status = bundle.getInt(BatteryManager.EXTRA_STATUS);
+                int health = bundle.getInt(BatteryManager.EXTRA_HEALTH);
+                boolean present = bundle.getBoolean(BatteryManager.EXTRA_PRESENT);
+                int level = bundle.getInt(BatteryManager.EXTRA_LEVEL);
+                int scale = bundle.getInt(BatteryManager.EXTRA_SCALE);
+                int iconSmall = bundle.getInt(BatteryManager.EXTRA_ICON_SMALL);
+                int plugged = bundle.getInt(BatteryManager.EXTRA_PLUGGED);
+                int voltage = bundle.getInt(BatteryManager.EXTRA_VOLTAGE);
+                int temperature = bundle.getInt(BatteryManager.EXTRA_TEMPERATURE);
+                String technology = bundle.getString(BatteryManager.EXTRA_TECHNOLOGY);
 
-                // 保存するデータ
-                // 時間+温度
                 Date date = new Date();
-                String text = String.format("%s: %d", date.toString(), temp);
+                BatteryState state = new BatteryState();
+                state.setTimestamp(date);
+                state.setStatus(status);
+                state.setHealth(health);
+                state.setPresent(present);
+                state.setLevel(level);
+                state.setScale(scale);
+                state.setIconSmall(iconSmall);
+                state.setPlugged(plugged);
+                state.setVoltage(voltage);
+                state.setTemperature(temperature);
+                state.setTechnology(technology);
+                String text = state.toString();
 
                 Log.i(TAG, text);
             }
