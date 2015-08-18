@@ -14,6 +14,11 @@ import net.cosmoway.batterystatelogger.models.BatteryState;
 
 import java.util.Date;
 
+import net.cosmoway.batterystatelogger.managers.LogFileManager;
+
+import java.util.Date;
+import java.util.Locale;
+
 public class LoggerService extends Service {
 
     private static final String TAG = "LoggerService";
@@ -86,9 +91,12 @@ public class LoggerService extends Service {
                 state.setVoltage(voltage);
                 state.setTemperature(temperature);
                 state.setTechnology(technology);
-                String text = state.toString();
+                String text = state.toString() + "\n";
+                String fileName = String.format(Locale.ENGLISH, "%tF.log", new Date());
+                String dirName = "BatteryState";
 
-                Log.i(TAG, text);
+                // 状態をファイル保存
+                LogFileManager.write(text, fileName, dirName, true);
             }
         }
     }
