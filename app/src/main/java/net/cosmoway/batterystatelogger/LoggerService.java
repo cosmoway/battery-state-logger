@@ -8,8 +8,13 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
+
+import java.util.Date;
 
 public class LoggerService extends Service {
+
+    private static final String TAG = "LoggerService";
 
     private BatteryStateReceiver mReceiver;
 
@@ -56,6 +61,13 @@ public class LoggerService extends Service {
                 // バッテリーが変化した
                 Bundle bundle = intent.getExtras();
                 int temp = bundle.getInt(BatteryManager.EXTRA_TEMPERATURE);
+
+                // 保存するデータ
+                // 時間+温度
+                Date date = new Date();
+                String text = String.format("%s: %d", date.toString(), temp);
+
+                Log.i(TAG, text);
             }
         }
     }
