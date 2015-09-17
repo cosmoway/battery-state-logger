@@ -97,6 +97,9 @@ public class LoggerService extends Service {
 
                 // 状態をファイル保存
                 LogFileManager.write(text, fileName, dirName, true);
+
+                // 状態を log 出力
+                Log.v(TAG, state.toString());
             }
         }
     }
