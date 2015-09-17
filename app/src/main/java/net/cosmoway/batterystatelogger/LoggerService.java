@@ -101,7 +101,7 @@ public class LoggerService extends Service {
                 LogFileManager.write(text, fileName, dirName, true);
 
                 // 状態を log 出力
-                DeployGate.logVerbose(state.toString());
+                Log.v(TAG, state.toString());
             }
         }
     }
