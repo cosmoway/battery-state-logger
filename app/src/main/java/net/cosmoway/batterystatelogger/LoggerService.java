@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.deploygate.sdk.DeployGate;
+
 import net.cosmoway.batterystatelogger.models.BatteryState;
 
 import java.util.Date;
@@ -99,7 +101,7 @@ public class LoggerService extends Service {
                 LogFileManager.write(text, fileName, dirName, true);
 
                 // 状態を log 出力
-                Log.v(TAG, state.toString());
+                DeployGate.logVerbose(state.toString());
             }
         }
     }
